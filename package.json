@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/syuja04/Project_UAS_Kelompok17/issues"
   },
-  "homepage": "https://github.com/syuja04/Project_UAS_Kelompok17#readme"
+  "homepage": "https://github.com/syuja04/Project_UAS_Kelompok17#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  }
 }
