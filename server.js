@@ -1,19 +1,32 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const { application } = require("express");
-const port = 3000;
+const cors = require("cors");
 
 const app = express();
 
-//parse application/json
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+var corsOptions = {
+  origin: "http://localhost:8081",
+};
 
-//Memanggil routes
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+// simple route
 app.get("/", (req, res) => {
-  res.json({ message: "hai" });
+  res.json({ message: "Welcome to bezkoder application." });
 });
 
-app.listen(port, () => {
-  console.log(`Server Berjalan di http://localhost:${port}`);
+require("./app/routes/user.routes.js")(app);
+require("./app/routes/admin.routes.js")(app);
+require("./app/routes/produk.routes.js")(app);
+require("./app/routes/payment.routes.js")(app);
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
