@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-
+const multer = require("multer");
+const cookieSession = require("cookie-session");
+const path = require("path");
 const app = express();
 
 var corsOptions = {
@@ -10,23 +12,56 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(express.json()); /* bodyParser.json() is deprecated */
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+//parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
+
+app.use(
+  cookieSession({
+    name: "bezkoder-session",
+    secret: "COOKIE_SECRET", // should use as secret environment variable
+    httpOnly: true,
+  })
+);
+
+const db = require("./app/models");
+
+const Role = db.role;
+
+db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Website Rental Car" });
 });
 
-require("./app/routes/user.routes.js")(app);
-require("./app/routes/admin.routes.js")(app);
-require("./app/routes/produk.routes.js")(app);
-require("./app/routes/payment.routes.js")(app);
+require("./app/routes/produk.routes")(app);
+require("./app/routes/payment.routes")(app);
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
 
-// set port, listen for requests
+app.use("./app/assets", express.static("assets"));
+
+//set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user",
+  });
+
+  Role.create({
+    id: 2,
+    name: "moderator",
+  });
+
+  Role.create({
+    id: 3,
+    name: "admin",
+  });
+}

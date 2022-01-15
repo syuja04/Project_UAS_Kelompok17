@@ -3,25 +3,25 @@ module.exports = (app) => {
 
   var router = require("express").Router();
 
-  // Create a new Payments
+  // Create a new Payment
   router.post("/", payments.create);
 
-  // Retrieve all Payments
+  // Retrieve all Tutorials
   router.get("/", payments.findAll);
 
-  // Retrieve all published Payments
+  // Retrieve all published Tutorials
   router.get("/published", payments.findAllPublished);
 
-  // Retrieve a single Payments with id
+  // Retrieve a single Payment with id
   router.get("/:id", payments.findOne);
 
-  // Update a Payments with id
+  // Update a Payment with id
   router.put("/:id", payments.update);
 
-  // Delete a Payments with id
+  // Delete a Payment with id
   router.delete("/:id", payments.delete);
 
-  // Delete all Payments
+  // Delete all Tutorials
   router.delete("/", payments.deleteAll);
 
   app.use("/api/payments", router);
