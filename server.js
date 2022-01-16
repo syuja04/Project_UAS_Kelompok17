@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 const cookieSession = require("cookie-session");
-const path = require("path");
+// const path = require("path");
 const app = express();
 
 var corsOptions = {
@@ -12,10 +12,12 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(express.json()); /* bodyParser.json() is deprecated */
+app.use(express.json({})); /* bodyParser.json() is deprecated */
 
 //parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
+
+app.use("./app/assets", express.static("assets"));
 
 app.use(
   cookieSession({
@@ -26,12 +28,10 @@ app.use(
 );
 
 const db = require("./app/models");
-
 const Role = db.role;
 
 db.sequelize.sync();
 
-// simple route
 app.get("/", (req, res) => {
   res.json({ message: "Website Rental Car" });
 });

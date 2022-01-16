@@ -1,3 +1,4 @@
+const { sequelize, Sequelize } = require("../models");
 const db = require("../models");
 const Produk = db.produks;
 const Op = db.Sequelize.Op;
@@ -149,3 +150,17 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+// exports.jumlahProduk = (req, res) => {
+//   Produk.findAll({
+//     attibutes: {
+//       include: [[Sequelize.fn("COUNT", Sequelize.col("id")), "produkCount"]],
+//     },
+//     include: [
+//       {
+//         model: Produk,
+//         attibutes: [],
+//       },
+//     ],
+//   });
+// };

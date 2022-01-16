@@ -14,6 +14,18 @@ exports.create = (req, res) => {
 
   // Create a Payment
   const payment = {
+    location: req.body.location,
+    date_in: req.body.location,
+    date_out: req.body.location,
+    name: req.body.name,
+    license: req.body.license,
+    street: req.body.street,
+    city: req.body.city,
+    province: req.body.province,
+    regional: req.body.regional,
+    phone: req.body.phone,
+    email: req.body.email,
+    note: req.body.note,
     status: req.body.status,
     total: req.body.total,
     published: req.body.published ? req.body.published : false,

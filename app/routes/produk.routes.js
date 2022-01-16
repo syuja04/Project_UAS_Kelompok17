@@ -1,3 +1,5 @@
+const { path } = require("express/lib/application");
+
 module.exports = (app) => {
   // const multer = require("multer");
   const produks = require("../controllers/produk.controller.js");
@@ -5,21 +7,24 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // const storage = multer.diskStorage({
-  //   destination: function (req, file, cb) {
-  //     cb(null, "./assets/");
-  //   },
-  //   filename: function (req, file, cb) {
-  //     cb(null, file.originalname);
+  //   destination: "./assets",
+  //   filename: (req, file, cb) => {
+  //     cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
   //   },
   // });
 
-  // const upload = multer({ storage: storage });
+  // const upload = multer({
+  //   storage: storage,
+  //   limits: {
+  //     fileSize: 1024 * 1024 * 5,
+  //   },
+  // });
 
   // Create a new Produk
   router.post("/add", produks.create);
 
   // Retrieve all Tutorials
-  router.get("/", produks.findAll);
+  router.get("/jumlah", produks.findAll);
 
   // Retrieve all published Tutorials
   router.get("/published", produks.findAllPublished);
